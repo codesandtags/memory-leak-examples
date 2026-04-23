@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { ShieldAlert, Activity, GitBranch, Globe, Scissors, Menu, X } from 'lucide-react';
+import { ShieldAlert, Activity, GitBranch, Globe, Scissors, Layers, Menu, X } from 'lucide-react';
 
 const Layout: React.FC = () => {
   const location = useLocation();
@@ -12,6 +12,7 @@ const Layout: React.FC = () => {
     { path: '/stale-closure', label: 'Stale Closure', icon: <GitBranch size={20} /> },
     { path: '/global-variable', label: 'Global Variable', icon: <ShieldAlert size={20} /> },
     { path: '/detached-dom', label: 'Detached DOM', icon: <Scissors size={20} /> },
+    { path: '/modal-leak', label: 'Modal Leak', icon: <Layers size={20} /> },
   ];
 
   const toggleMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);

@@ -7,6 +7,7 @@ import UnremovedListener from './pages/UnremovedListener';
 import StaleClosure from './pages/StaleClosure';
 import GlobalVariable from './pages/GlobalVariable';
 import DetachedDOM from './pages/DetachedDOM';
+import ModalLeak from './pages/ModalLeak';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
         <Route path="stale-closure" element={<StaleClosure />} />
         <Route path="global-variable" element={<GlobalVariable />} />
         <Route path="detached-dom" element={<DetachedDOM />} />
+        <Route path="modal-leak" element={<ModalLeak />} />
       </Route>
     </Routes>
   );

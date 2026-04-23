@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Activity, Globe, GitBranch, ShieldAlert, Scissors, ArrowRight } from 'lucide-react';
+import { Activity, Globe, GitBranch, ShieldAlert, Scissors, Layers, ArrowRight } from 'lucide-react';
 
 const Home: React.FC = () => {
   const examples = [
@@ -43,6 +43,14 @@ const Home: React.FC = () => {
       icon: <Scissors size={32} className="text-gradient" />,
       path: '/detached-dom',
       color: 'rgba(239, 68, 68, 0.2)'
+    },
+    {
+      id: 'modal-leak',
+      title: 'Modal Portal Leak',
+      description: 'Using React Portals but failing to remove the host container leads to massive orphaned DOM trees.',
+      icon: <Layers size={32} className="text-gradient" />,
+      path: '/modal-leak',
+      color: 'rgba(139, 92, 246, 0.2)'
     }
   ];
 
