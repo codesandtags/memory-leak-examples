@@ -11,14 +11,13 @@ const StaleClosure: React.FC = () => {
 
   useEffect(() => {
     const logInterval = setInterval(() => {
-      // The closure captures 'count' from the render when useEffect was called.
-      // Since dependency array is empty [], it only captures count = 0.
+      // FIXED: Using count in the dependency array prevents stale closure
       const msg = `Interval log: count is \${count}. Array size: \${heavyObject.current.length}`;
       setLogs((prev) => [...prev.slice(-4), msg]);
     }, 2000);
 
     return () => clearInterval(logInterval);
-  }, []); // Empty dependency array causes the stale closure
+  }, [count]); // Correct dependency prevents stale closure
 
   return (
     <div className="leak-page">
