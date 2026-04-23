@@ -6,8 +6,8 @@ const IntervalComponent: React.FC<{ onUnmount: () => void }> = ({ onUnmount }) =
 
   useEffect(() => {
     console.log('Interval Component Mounted. Starting Interval...');
-    // LEAK: Setting an interval but not clearing it on unmount
-    setInterval(() => {
+    // FIXED: Store the interval ID and clear it on unmount
+    const intervalId = setInterval(() => {
       setTicks((t) => {
         const newTick = t + 1;
         console.log(`Interval tick: ${newTick}`);
@@ -18,8 +18,8 @@ const IntervalComponent: React.FC<{ onUnmount: () => void }> = ({ onUnmount }) =
     return () => {
       console.log('Interval Component Unmounted.');
       onUnmount();
-      // @TODO: Fix memory leak here
-      // clearInterval(intervalId);
+      // Fixed memory leak
+      clearInterval(intervalId);
     };
   }, [onUnmount]);
 
