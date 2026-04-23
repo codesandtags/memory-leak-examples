@@ -12,14 +12,14 @@ const ListenerComponent: React.FC<{ onUnmount: () => void }> = ({ onUnmount }) =
       setMousePos({ x: e.clientX, y: e.clientY });
     };
 
-    // LEAK: Attaching event listener to window but not removing it
+    // FIXED: Attaching event listener to window and removing it on unmount
     window.addEventListener('mousemove', handleMouseMove);
 
     return () => {
       console.log('Listener Component Unmounted.');
       onUnmount();
-      // @TODO: Fix memory leak here
-      // window.removeEventListener('mousemove', handleMouseMove);
+      // Fixed memory leak
+      window.removeEventListener('mousemove', handleMouseMove);
     };
   }, [onUnmount]);
 
