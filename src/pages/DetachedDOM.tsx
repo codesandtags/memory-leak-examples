@@ -1,11 +1,19 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Scissors, AlertTriangle } from 'lucide-react';
 
 const DetachedDOM: React.FC = () => {
   const [elementsCount, setElementsCount] = useState(0);
   
-  // LEAK: Keeping references to DOM nodes in a React Ref even after they are removed
+  // FIXED: The React Ref holds DOM nodes, but we ensure they are cleared on unmount
   const detachedNodesRef = useRef<HTMLElement[]>([]);
+
+  useEffect(() => {
+    // Cleanup function runs on unmount to nullify DOM references
+    return () => {
+      detachedNodesRef.current = [];
+      console.log('Unmounted: Cleared detached nodes.');
+    };
+  }, []);
 
   const generateNodes = () => {
     // Create 1000 detached div elements
