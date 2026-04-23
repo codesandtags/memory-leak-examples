@@ -3,31 +3,25 @@ import { ShieldAlert, AlertTriangle } from 'lucide-react';
 
 const GlobalVariable: React.FC = () => {
   const [dataSize, setDataSize] = useState(0);
+  // FIXED: Using local state instead of the window object
+  const [localArray, setLocalArray] = useState<any[]>([]);
 
   const leakData = () => {
-    // LEAK: Attaching data directly to the window object
-    // TypeScript will complain without the 'any' cast, which is a good thing!
-    const windowAsAny = window as any;
+    // Push a large chunk of data into local state
+    const largeChunk = new Array(1000000).fill('Some heavy string data to not leak memory');
     
-    if (!windowAsAny.leakedArray) {
-      windowAsAny.leakedArray = [];
-    }
-
-    // Push a large chunk of data
-    const largeChunk = new Array(1000000).fill('Some heavy string data to leak memory');
-    windowAsAny.leakedArray.push(largeChunk);
-    
-    setDataSize(windowAsAny.leakedArray.length);
-    console.log(`Leaked Array contains \${windowAsAny.leakedArray.length} chunks.`);
+    setLocalArray((prev) => {
+      const newArray = [...prev, largeChunk];
+      setDataSize(newArray.length);
+      console.log(`Local Array contains \${newArray.length} chunks.`);
+      return newArray;
+    });
   };
 
   const clearData = () => {
-    const windowAsAny = window as any;
-    if (windowAsAny.leakedArray) {
-      windowAsAny.leakedArray = null;
-      setDataSize(0);
-      console.log('Global data cleared.');
-    }
+    setLocalArray([]);
+    setDataSize(0);
+    console.log('Local data cleared.');
   };
 
   return (
